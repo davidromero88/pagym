@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina Full Body</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-24 font-sans antialiased">
+
+    <!-- Fixed header with routine tabs -->
+    <header class="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 z-50 px-4 py-3">
+        <div class="max-w-lg mx-auto flex gap-2">
+            <button onclick="setRoutine('A')" id="tab-A" class="flex-1 py-2 text-sm font-bold rounded-lg bg-blue-600 text-white shadow transition-all">Día 1: Rutina A</button>
+            <button onclick="setRoutine('B')" id="tab-B" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-400 bg-slate-800 hover:text-white transition-all">Día 2: Rutina B</button>
+        </div>
+    </header>
+
+    <main class="max-w-lg mx-auto px-4 pt-20 space-y-8">
+
+        <!-- Hero banner image -->
+        <div class="relative -mx-4 -mt-4 overflow-hidden rounded-b-2xl shadow-lg">
+            <img src="portada.png" alt="Transformación fitness" class="w-full h-56 object-cover object-top">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+                <h1 class="text-2xl font-black text-white tracking-tight leading-tight">Rutina Full Body</h1>
+                <p class="text-xs text-slate-300 mt-1 font-medium">Tu plan de entrenamiento paso a paso</p>
+            </div>
+        </div>
+
+        <!-- Weekly schedule tip -->
+        <div class="bg-blue-900/30 border border-blue-800/50 rounded-xl p-4 shadow-sm">
+            <h3 class="text-sm font-bold text-blue-400 mb-2 flex items-center gap-2">
+                <span>&#x1F4C5;</span> ¿Cómo organizar la semana?
+            </h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Alterná el Día 1 y el Día 2 cada vez que vayas, intentando dejar un día de descanso en el medio. Lo genial de este sistema es que se adapta a tu semana: si podés ir 2, 3 o 4 días, simplemente hacé la rutina que sigue en la lista.
+            </p>
+        </div>
+
+        <!-- Warm-up section (always visible, both routines) -->
+        <section>
+            <h2 class="text-xl font-extrabold text-white mb-4 flex items-center gap-2">
+                <span>&#x1F525;</span> Entrada en calor
+            </h2>
+
+            <div class="space-y-3">
+                <!-- Card 1: Light cardio -->
+                <article id="card-1" class="bg-slate-800 rounded-xl border border-slate-700 shadow-sm transition-all overflow-hidden">
+                    <!-- Clickable header toggles collapse -->
+                    <div class="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-700/50" onclick="toggleWarmup(1)">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="check-1" class="w-5 h-5 rounded border-slate-500 text-green-500 focus:ring-0 bg-slate-700 pointer-events-none">
+                            <h3 class="font-bold text-slate-200">1. Cardio Suave (5 Min)</h3>
+                        </div>
+                        <span id="icon-1" class="text-slate-400 transition-transform">&#x25BC;</span>
+                    </div>
+
+                    <!-- Collapsible content -->
+                    <div id="content-1" class="p-4 pt-0 border-t border-slate-700/50">
+                        <p class="text-sm text-slate-300 mb-3 mt-3"><strong>Cinta, bici o elíptica.</strong> El objetivo es elevar la temperatura articular y bombear sangre a los músculos sin generar fatiga central.</p>
+                        <div class="flex items-center gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                            <img src="sweat.png" alt="Gotitas de transpiración" class="w-16 h-16 rounded-lg object-cover border border-slate-600 cursor-pointer" onclick="toggleSweatImg(this)">
+                            <p class="italic text-xs text-slate-400">Es normal terminar con unas pequeñas gotitas en la frente. Ese es el punto ideal.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Joint mobility -->
+                <article id="card-2" class="bg-slate-800 rounded-xl border border-slate-700 shadow-sm transition-all overflow-hidden">
+                    <div class="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-700/50" onclick="toggleWarmup(2)">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="check-2" class="w-5 h-5 rounded border-slate-500 text-green-500 focus:ring-0 bg-slate-700 pointer-events-none">
+                            <h3 class="font-bold text-slate-200">2. Movilidad General (5 Min)</h3>
+                        </div>
+                        <span id="icon-2" class="text-slate-400 transition-transform">&#x25BC;</span>
+                    </div>
+
+                    <div id="content-2" class="p-4 pt-0 border-t border-slate-700/50">
+                        <p class="text-sm text-slate-300 mb-3 mt-3">Lubricación articular en colchoneta. Foco en extensión torácica (pecho) y rotación de cadera.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-slate-900 shadow-inner">
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/wp9AG8htVVE?rel=0&playsinline=1" title="Movilidad Columna" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-slate-900 shadow-inner">
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/vffHZK1E-CU?rel=0&playsinline=1" title="Estiramiento Spiderman" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Strength block section -->
+        <section>
+            <h2 class="text-xl font-extrabold text-white mb-4 flex items-center gap-2">
+                <span>&#x1F3CB;&#xFE0F;</span> Bloque de Fuerza
+            </h2>
+
+            <!-- Weight selection golden rule -->
+            <div class="bg-amber-900/20 border border-amber-700/50 rounded-xl p-4 mb-5 shadow-sm">
+                <h3 class="text-sm font-bold text-amber-400 mb-1 flex items-center gap-1">
+                    <span>&#x2696;&#xFE0F;</span> La Regla de Oro del Peso
+                </h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Si podés hacer más de 12 repeticiones sin esfuerzo, <strong>subí el peso</strong> en la próxima serie. Si no lográs llegar a 8 repeticiones con buena técnica, <strong>bajalo</strong>. La técnica siempre manda sobre el ego.
+                </p>
+            </div>
+
+            <div id="ejercicios-rutina-A" class="space-y-4"></div>
+            <div id="ejercicios-rutina-B" class="hidden space-y-4"></div>
+        </section>
+
+        <!-- Cool-down section -->
+        <section class="pb-8">
+            <h2 class="text-xl font-extrabold text-white mb-4 flex items-center gap-2">
+                <span>&#x1F9D8;&#x200D;&#x2642;&#xFE0F;</span> Vuelta a la calma
+            </h2>
+
+            <div class="space-y-3">
+                <article class="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-sm">
+                    <h3 class="font-bold text-slate-200 mb-2">Estiramientos Libres (5 Min)</h3>
+                    <p class="text-sm text-slate-400">Estirá suavemente los músculos que trabajaste y que sientas más tensos hoy. No tiene que doler, es solo para soltar el cuerpo y relajar el sistema nervioso antes de irte.</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating rest timer bar -->
+    <div id="rest-timer" class="fixed bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 transform translate-y-full transition-transform duration-300 z-50 flex items-center justify-between pb-8 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <div class="flex items-center gap-3">
+            <div class="text-2xl animate-pulse">&#x23F1;&#xFE0F;</div>
+            <div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Descanso activo</p>
+                <p id="timer-display" class="text-3xl font-mono font-bold text-blue-400">01:30</p>
+            </div>
+        </div>
+        <button onclick="stopTimer()" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-3 rounded-xl font-bold text-sm transition-colors">Cerrar</button>
+    </div>
+
+    <script>
+        // --- Toggle warm-up cards: collapse content and mark as done ---
+        function toggleWarmup(id) {
+            var content = document.getElementById('content-' + id);
+            var checkbox = document.getElementById('check-' + id);
+            var icon = document.getElementById('icon-' + id);
+            var card = document.getElementById('card-' + id);
+
+            var isHidden = content.classList.contains('hidden');
+
+            if (!isHidden) {
+                // Collapse and mark complete
+                content.classList.add('hidden');
+                checkbox.checked = true;
+                icon.style.transform = 'rotate(-90deg)';
+                card.classList.add('opacity-70', 'border-green-500/30');
+            } else {
+                // Expand and uncheck
+                content.classList.remove('hidden');
+                checkbox.checked = false;
+                icon.style.transform = 'rotate(0deg)';
+                card.classList.remove('opacity-70', 'border-green-500/30');
+            }
+        }
+
+        // --- Exercise data for both routines ---
+        // Color classes are written in full so Tailwind CDN can detect them
+        var rutinasData = {
+            'A': [
+                {
+                    nombre: 'Plancha Abdominal (Plank)', reps: '30 segs',
+                    patron: 'Core',
+                    fundamento: 'Desarrolla la estabilidad del core. Es esencial para aprender a mantener la columna neutra durante otros ejercicios de fuerza.',
+                    tip: 'Contrae los glúteos y el abdomen para mantener el cuerpo en línea recta.',
+                    colorTag: 'text-amber-400', colorBorder: 'border-amber-500/30', colorLeft: 'border-amber-500',
+                    descanso: 60
+                },
+                {
+                    nombre: 'Prensa de Piernas', reps: '8 a 12',
+                    patron: 'Piernas',
+                    fundamento: 'Desarrolla la fuerza en el tren inferior. Al mantener la espalda apoyada, reduce la exigencia sobre la zona lumbar, permitiendo un empuje seguro.',
+                    tip: 'Desciende de forma controlada. Evita bloquear completamente las rodillas al extender las piernas.',
+                    colorTag: 'text-blue-400', colorBorder: 'border-blue-500/30', colorLeft: 'border-blue-500',
+                    descanso: 120
+                },
+                {
+                    nombre: 'Camilla de Isquiotibiales', reps: '8 a 12',
+                    patron: 'Piernas (Atrás)',
+                    fundamento: 'Aísla los músculos posteriores del muslo. Es fundamental para equilibrar la fuerza respecto a los cuádriceps y proteger la articulación de la rodilla.',
+                    tip: 'Realiza una pausa de un segundo en el punto de máxima contracción.',
+                    colorTag: 'text-indigo-400', colorBorder: 'border-indigo-500/30', colorLeft: 'border-indigo-500',
+                    descanso: 90
+                },
+                {
+                    nombre: 'Polea Alta al Pecho', reps: '8 a 12',
+                    patron: 'Espalda',
+                    fundamento: 'Fortalece la musculatura de la espalda. Es un excelente ejercicio para mejorar la postura y desarrollar la fuerza necesaria para progresiones futuras.',
+                    tip: 'Lleva la barra hacia la parte superior del pecho, manteniendo el torso erguido.',
+                    colorTag: 'text-emerald-400', colorBorder: 'border-emerald-500/30', colorLeft: 'border-emerald-500',
+                    descanso: 90
+                },
+                {
+                    nombre: 'Press de Pecho con Mancuernas', reps: '8 a 12',
+                    patron: 'Pecho',
+                    fundamento: 'Trabaja los músculos pectorales y tríceps. El uso de mancuernas fomenta el trabajo unilateral y mejora la estabilidad articular.',
+                    tip: 'Controla el descenso de las mancuernas en todo momento para un movimiento seguro.',
+                    colorTag: 'text-purple-400', colorBorder: 'border-purple-500/30', colorLeft: 'border-purple-500',
+                    descanso: 90
+                }
+            ],
+            'B': [
+                {
+                    nombre: 'Bird Dog (Supermán en cuadrupedia)', reps: '8 a 10 por lado',
+                    patron: 'Core',
+                    fundamento: 'Mejora la estabilidad de la columna y el control corporal cruzado. Es un ejercicio de bajo impacto ideal para fortalecer la zona media.',
+                    tip: 'Extiende un brazo y la pierna contraria de forma controlada, manteniendo la espalda paralela al suelo.',
+                    colorTag: 'text-amber-400', colorBorder: 'border-amber-500/30', colorLeft: 'border-amber-500',
+                    descanso: 60
+                },
+                {
+                    nombre: 'Sentadilla Copa (Goblet Squat)', reps: '8 a 12',
+                    patron: 'Piernas',
+                    fundamento: 'Mantener el peso al frente ayuda a conservar una postura erguida de manera natural. Es ideal para aprender la técnica correcta de la sentadilla.',
+                    tip: 'Mantén la mancuerna cerca del pecho. Desciende controlando el movimiento, manteniendo el peso en los talones.',
+                    colorTag: 'text-blue-400', colorBorder: 'border-blue-500/30', colorLeft: 'border-blue-500',
+                    descanso: 120
+                },
+                {
+                    nombre: 'Bisagra de Cadera de Pie', reps: '10 a 15',
+                    patron: 'Cadera',
+                    fundamento: 'Enseña el patrón de movimiento de flexión de cadera sin añadir carga excesiva. Es clave para activar glúteos e isquiotibiales protegiendo la zona lumbar.',
+                    tip: 'Lleva la cadera hacia atrás con las piernas semi-rígidas, manteniendo la espalda recta.',
+                    colorTag: 'text-rose-400', colorBorder: 'border-rose-500/30', colorLeft: 'border-rose-500',
+                    descanso: 90
+                },
+                {
+                    nombre: 'Remo con Mancuernas', reps: '8 a 12',
+                    patron: 'Espalda',
+                    fundamento: 'Fortalece la zona media de la espalda. Contribuye a retraer las escápulas y mejorar la alineación de los hombros.',
+                    tip: 'Tira de la mancuerna hacia la cadera buscando juntar los omóplatos en la espalda.',
+                    colorTag: 'text-emerald-400', colorBorder: 'border-emerald-500/30', colorLeft: 'border-emerald-500',
+                    descanso: 90
+                },
+                {
+                    nombre: 'Press Militar con Mancuernas', reps: '8 a 12',
+                    patron: 'Hombros',
+                    fundamento: 'Desarrolla la fuerza en los hombros y mejora la estabilidad superior. Enseña a realizar empujes verticales sin sobrextender la columna.',
+                    tip: 'Empuja en línea recta hacia arriba. Evita arquear la espalda baja.',
+                    colorTag: 'text-purple-400', colorBorder: 'border-purple-500/30', colorLeft: 'border-purple-500',
+                    descanso: 90
+                }
+            ]
+        };
+
+        // --- Build exercise cards using DOM (avoids innerHTML+= re-parsing) ---
+        function renderExercises(routineKey, containerId) {
+            var container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            rutinasData[routineKey].forEach(function(ej, index) {
+                var min = Math.floor(ej.descanso / 60);
+                var seg = (ej.descanso % 60).toString().padStart(2, '0');
+
+                var card = document.createElement('article');
+                card.className = 'bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-sm';
+                card.innerHTML =
+                    '<div class="mb-3">' +
+                        '<div class="flex items-center gap-2 mb-1">' +
+                            '<span class="text-[10px] font-bold uppercase tracking-wider ' + ej.colorTag + ' border ' + ej.colorBorder + ' px-2 py-0.5 rounded">' + ej.patron + '</span>' +
+                        '</div>' +
+                        '<h3 class="text-lg font-bold text-slate-100">' + (index + 1) + '. ' + ej.nombre + '</h3>' +
+                    '</div>' +
+                    '<div class="bg-slate-900/60 rounded-lg p-3 mb-4 border-l-2 ' + ej.colorLeft + '">' +
+                        '<p class="text-xs text-slate-400 mb-2"><strong class="text-slate-300">¿Por qué lo hacemos?</strong> ' + ej.fundamento + '</p>' +
+                        '<p class="text-sm font-medium text-slate-200">&#x1F4A1; ' + ej.tip + '</p>' +
+                    '</div>' +
+                    '<div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-700">' +
+                        '<span class="font-bold text-sm text-slate-300">3 Series x ' + ej.reps + '</span>' +
+                        '<button onclick="startTimer(' + ej.descanso + ')" class="text-xs bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">' +
+                            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' +
+                            ' Descanso (' + min + ':' + seg + ')' +
+                        '</button>' +
+                    '</div>';
+
+                container.appendChild(card);
+            });
+        }
+
+        renderExercises('A', 'ejercicios-rutina-A');
+        renderExercises('B', 'ejercicios-rutina-B');
+
+        // --- Tab switching between Routine A and B ---
+        function setRoutine(routine) {
+            var tabA = document.getElementById('tab-A');
+            var tabB = document.getElementById('tab-B');
+            var divA = document.getElementById('ejercicios-rutina-A');
+            var divB = document.getElementById('ejercicios-rutina-B');
+
+            var active = 'flex-1 py-2 text-sm font-bold rounded-lg bg-blue-600 text-white shadow transition-all';
+            var inactive = 'flex-1 py-2 text-sm font-bold rounded-lg text-slate-400 bg-slate-800 hover:text-white transition-all';
+
+            if (routine === 'A') {
+                tabA.className = active;
+                tabB.className = inactive;
+                divA.classList.remove('hidden');
+                divB.classList.add('hidden');
+            } else {
+                tabB.className = active;
+                tabA.className = inactive;
+                divB.classList.remove('hidden');
+                divA.classList.add('hidden');
+            }
+        }
+
+        // --- Rest timer: slides up from the bottom ---
+        var timerInterval = null;
+        var timeLeft = 90;
+
+        function startTimer(seconds) {
+            clearInterval(timerInterval);
+            timeLeft = seconds;
+            updateTimerDisplay();
+            document.getElementById('rest-timer').classList.remove('translate-y-full');
+
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    // Vibrate on mobile when time is up
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('rest-timer').classList.add('translate-y-full');
+        }
+
+        function updateTimerDisplay() {
+            var m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            var s = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = m + ':' + s;
+        }
+
+        // --- Tap sweat image to expand fullscreen, tap again to close ---
+        function toggleSweatImg(img) {
+            var overlay = document.getElementById('img-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'img-overlay';
+                overlay.style.cssText = 'position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;cursor:pointer;';
+                overlay.onclick = function() { overlay.remove(); };
+                var full = document.createElement('img');
+                full.src = img.src;
+                full.alt = img.alt;
+                full.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:1rem;object-fit:contain;';
+                overlay.appendChild(full);
+                document.body.appendChild(overlay);
+            } else {
+                overlay.remove();
+            }
+        }
+    </script>
+</body>
+</html>
